@@ -1,8 +1,8 @@
 """
 DAG: Pipeline de riesgo crediticio
 1. Carga el dataset crudo a PostgreSQL (staging)
-2. Entrena y compara modelos (Random Forest vs Regresión Logística)
-3. Publica métricas y feature importance en PostgreSQL
+2. Entrena y compara modelos (Random Forest vs Regresión Logistica)
+3. Publica metricas y feature importance en PostgreSQL
 4. Genera predicciones sobre el batch actual
 """
 from datetime import datetime, timedelta
