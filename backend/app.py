@@ -71,3 +71,24 @@ def latest_feature_importance():
     cur.close()
     conn.close()
     return jsonify(rows)
+
+
+@app.route("/api/predict", methods=["POST"])
+def predict():
+    payload = request.get_json()
+    rf, feature_cols = load_model_artifacts()
+
+    df = pd.DataFrame([payload])
+    for col in feature_cols:
+        if col not in df.columns:
+            df[col] = 0
+    df = df[feature_cols]
+
+    proba = rf.predict_proba(df)[0][1]
+    label = int(proba >= 0.5)
+
+    return jsonify({"default_probability": round(float(proba), 4), "predicted_label": label})
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=False)
